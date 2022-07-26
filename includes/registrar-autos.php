@@ -1,5 +1,5 @@
 <div id="#wpbody-content" class="wrap">
-    <h1><?php esc_html_e('Registrar Clientes', 'textdomain');?></h1>
+    <h1><?php esc_html_e('Registrar', 'textdomain');?></h1>
     <div class="columns">
         <div class="column">
             <div class="card p-0">
@@ -11,30 +11,30 @@
                             <div class="columns">
                                 <div class="column">
                                     <div class="field">
-                                        <label class="label">Nombre(s)</label>
+                                        <label class="label">Marca</label>
                                         <div class="control">
-                                            <input class="input" type="text" name="nombre" id="nombre">
+                                            <input class="input" type="text" name="marca"
+                                                id="marca">
                                         </div>
                                         <p class="help">This is a help text</p>
                                     </div>
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <label class="label">Apellido Materno</label>
+                                        <label class="label">Modelo</label>
                                         <div class="control">
-                                            <input class="input" type="text" name="apellido_materno"
-                                                id="apellido_materno">
+                                            <input class="input" type="text" name="modelo"
+                                                id="modelo">
                                         </div>
                                         <p class="help">This is a help text</p>
                                     </div>
-
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <label class="label">Apellido Paterno</label>
+                                        <label class="label">Año</label>
                                         <div class="control">
-                                            <input class="input" type="text" name="apellido_paterno"
-                                                id="apellido_paterno">
+                                            <input class="input" type="text" name="año"
+                                                id="año">
                                         </div>
                                         <p class="help">This is a help text</p>
                                     </div>
@@ -45,25 +45,16 @@
                             <!-- Datos de Contacto del Cliente -->
                             <div class="columns">
                                 <div class="column">
-                                    <label class="label">Teléfono 1:</label>
+                                    <label class="label">Placa</label>
                                     <div class="control">
-                                        <input class="input" type="text" name="telefono_1" id="telefono_1">
+                                        <input class="input" type="text" name="placa" id="placa">
                                     </div>
                                     <p class="help">This is a help text</p>
                                 </div>
                                 <div class="column">
-                                    <label class="label">Teléfono 2:</label>
+                                    <label class="label">Numero de Serie</label>
                                     <div class="control">
-                                        <input class="input" type="text" name="telefono_2" id="telefono_2">
-                                    </div>
-                                    <p class="help">This is a help text</p>
-                                </div>
-                            </div>
-                            <div class="columns">
-                                <div class="column">
-                                    <label class="label">Dirección:</label>
-                                    <div class="control">
-                                        <input class="input" type="text" name="direccion" id="direccion">
+                                        <input class="input" type="text" name="serie" id="serie">
                                     </div>
                                     <p class="help">This is a help text</p>
                                 </div>
