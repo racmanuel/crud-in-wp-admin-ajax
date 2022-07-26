@@ -18,15 +18,17 @@ function crud_install()
     global $wpdb;
     global $crud_db_version;
 
-    $table_name = $wpdb->prefix . 'crud';
-
     $charset_collate = $wpdb->get_charset_collate();
-    $sql = "CREATE TABLE $table_name (
-        `id` INT(11) NOT NULL AUTO_INCREMENT,
-        `nombres` VARCHAR(255) NOT NULL COLLATE 'utf8_bin',
-        `apellido_mat` VARCHAR(255) NOT NULL COLLATE 'utf8_bin',
-        `appelido_pat` VARCHAR(255) NOT NULL COLLATE 'utf8_bin',
-        PRIMARY KEY (`id`) USING BTREE
+    
+    $sql = "CREATE TABLE `wp_clientes` (
+        `ID` INT(11) NOT NULL AUTO_INCREMENT,
+        `NOMBRE` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        `APELLIDO_MAT` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        `APELLIDO_PAT` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        `TELEFONO_1` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        `TELEFONO_2` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        `DIRECCION` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+        PRIMARY KEY (`ID`) USING BTREE
     ) $charset_collate;";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -68,7 +70,44 @@ function clientesscripts() {
     wp_register_script('clientes-js', plugins_url( '/js/clientes.js', __FILE__ ), array( 'jquery' ), '1.0.0', true);
     wp_enqueue_script( 'clientes-js' );
     wp_localize_script( 'clientes-js' , 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-    if($_GET['page'] == 'registrar-clientes' || $_GET['page'] == 'ver-clientes'){
+    if($_GET['page'] == 'registrar-clientes'){
         wp_enqueue_style('bulma-css', 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css', '1.0.0', 'all');
     }
 }
+
+/**
+ * Funcion que captura los valores de una
+ * petición POST o GET de HTTP.
+ */
+function my_save_custom_form()
+{
+    // Nuestro código de manipulación de los datos
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'clientes';
+
+    $nombre = $_POST['nombre'];
+    $apellido_materno = $_POST['apellido_mat'];
+    $apellido_paterno = $_POST['apellido_pat'];
+    $telefono_1 = $_POST['telefono_1'];
+    $telefono_2 = $_POST['telefono_2'];
+    $direccion = $_POST['direccion'];
+
+    $wpdb->insert(
+        $table_name,
+        array(
+            'NOMBRE' => $nombre,
+            'APELLIDO_MAT' => $apellido_materno,
+            'APELLIDO_PAT' => $apellido_paterno,
+            'TELEFONO_1' => $telefono_1,
+            'TELEFONO_2' => $telefono_2,
+            'DIRECCION' => $direccion,
+        )
+    );
+
+    //wp_redirect(site_url('/')); // <-- here goes address of site that user should be redirected after submitting that form
+    wp_die();
+}
+
+add_action('wp_ajax_nopriv_my_save_custom_form', 'my_save_custom_form'); // Para usuarios no logueados
+add_action('wp_ajax_my_save_custom_form', 'my_save_custom_form'); // Para usuarios logueados
