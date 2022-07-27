@@ -54,8 +54,21 @@ function crud_install()
     AUTO_INCREMENT=13
     ;";
 
+    $table_name_clientes_autos = $wpdb->prefix . 'clientes_autos';
+    $wp_clientes_autos = "CREATE TABLE IF NOT EXISTS $table_name_clientes_autos (
+    `ID` int(11) NOT NULL AUTO_INCREMENT,
+    `ID_CLIENTE` int(11) NOT NULL,
+    `ID_AUTO` int(11) NOT NULL,
+    PRIMARY KEY (`ID`),
+    KEY `ID_CLIENTE` (`ID_CLIENTE`),
+    KEY `ID_AUTO` (`ID_AUTO`)
+    ) 
+    $charset_collate 
+    ENGINE=InnoDB 
+    AUTO_INCREMENT=6";
+
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    dbDelta(array($wp_clientes, $wp_autos));
+    dbDelta(array($wp_clientes, $wp_autos, $wp_clientes_autos));
 
     add_option('crud_db_version', $crud_db_version);
 }
@@ -159,6 +172,7 @@ function my_save_custom_form()
     global $wpdb;
 
     $table_name = $wpdb->prefix . 'clientes';
+    $relation_table = $wpdb->prefix . 'clientes_autos';
 
     $nombre = $_POST['nombre'];
     $apellido_materno = $_POST['apellido_mat'];
@@ -166,6 +180,7 @@ function my_save_custom_form()
     $telefono_1 = $_POST['telefono_1'];
     $telefono_2 = $_POST['telefono_2'];
     $direccion = $_POST['direccion'];
+    $auto = $_POST['auto'];
 
     $wpdb->insert(
         $table_name,
@@ -176,6 +191,16 @@ function my_save_custom_form()
             'TELEFONO_1' => $telefono_1,
             'TELEFONO_2' => $telefono_2,
             'DIRECCION' => $direccion,
+        )
+    );
+
+    $last_updated_row = $wpdb->insert_id;
+    
+    $wpdb->insert(
+        $relation_table,
+        array(
+            'ID_CLIENTE' => $last_updated_row,
+            'ID_AUTO' => $auto
         )
     );
 

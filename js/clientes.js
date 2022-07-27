@@ -10,6 +10,7 @@ jQuery(document).ready(function ($) {
         var telefono_1 = $('#telefono_1').val();
         var telefono_2 = $('#telefono_2').val();
         var direccion = $('#direccion').val();
+        var auto = $('#auto').val();
 
         $.ajax({
             type: "POST",
@@ -21,7 +22,8 @@ jQuery(document).ready(function ($) {
                 apellido_pat: apellido_pat,
                 telefono_1: telefono_1,
                 telefono_2: telefono_2,
-                direccion: direccion
+                direccion: direccion,
+                auto: auto
             },
             beforeSend: function (response) {
                 $('#alerts').addClass('is-info');

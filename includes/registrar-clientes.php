@@ -70,6 +70,26 @@
                             </div>
                             <!-- Datos de Contacto del Cliente -->
 
+                            <!-- Datos del Auto -->
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="select">
+                                        <select id="auto" name="auto">
+                                        <option selected="selected">-Selecciona un Auto</option>
+                                            <?php
+                                            global $wpdb;
+                                            $table_name = $wpdb->prefix . 'autos';
+                                            $results = $wpdb->get_results("SELECT * FROM  $table_name" );
+                                            foreach($results as $row)
+                                            {
+                                                echo '<option value="'.$row->ID.'">'. $row->ID . ' '. $row->MARCA . ' ' . $row->MODELO . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <button type="submit" class="button is-normal is-success">Enviar</button>
                         </form>
                         <br>

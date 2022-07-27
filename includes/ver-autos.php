@@ -7,7 +7,7 @@ if (!class_exists('WP_List_Table')) {
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class Clientes_List_Table extends WP_List_Table
+class Autos_List_Table extends WP_List_Table
 {
     /**
      * Prepare the items for the table to process
@@ -47,12 +47,12 @@ class Clientes_List_Table extends WP_List_Table
     {
         $columns = array(
             'id' => 'ID',
-            'nombres' => 'Nombre(s)',
-            'apellido_mat' => 'Apellido Materno',
-            'apellido_pat' => 'Apellido Paterno',
-            'telefono_1' => 'Teléfono 1',
-            'telefono_2' => 'Teléfono 2',
-            'direccion' => 'Dirección'
+            'fecha_reg' => 'Fecha de Registro',
+            'marca' => 'Marca',
+            'modelo' => 'Modelo',
+            'año' => 'Año',
+            'placa' => 'Placa',
+            'serie' => 'Serie'
         );
 
         return $columns;
@@ -88,18 +88,18 @@ class Clientes_List_Table extends WP_List_Table
         $data = array();
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'clientes';
+        $table_name = $wpdb->prefix . 'autos';
         $consulta = $wpdb->get_results("SELECT * FROM $table_name");
 
         foreach ($consulta as $value){ 
             $data[] = array(
                 'id' => $value->ID,
-                'nombres' => $value->NOMBRE,
-                'apellido_mat' => $value->APELLIDO_MAT,
-                'apellido_pat' => $value->APELLIDO_PAT,
-                'telefono_1' => $value->TELEFONO_1,
-                'telefono_2' => $value->TELEFONO_2,
-                'direccion' =>$value->DIRECCION
+                'fecha_reg' => $value->FECHA_REG,
+                'marca' => $value->MARCA,
+                'modelo' => $value->MODELO,
+                'año' => $value->AÑO,
+                'placa' => $value->PLACA,
+                'serie' =>$value->SERIE
             );
         }
 
@@ -118,12 +118,12 @@ class Clientes_List_Table extends WP_List_Table
     {
         switch ($column_name) {
             case 'id':
-            case 'nombres':
-            case 'apellido_mat':
-            case 'apellido_pat':
-            case 'telefono_1':
-            case 'telefono_2':
-            case 'direccion':
+            case 'fecha_reg':
+            case 'marca':
+            case 'modelo':
+            case 'año':
+            case 'placa':
+            case 'serie':
                 return $item[$column_name];
 
             default:
@@ -162,11 +162,11 @@ class Clientes_List_Table extends WP_List_Table
     }
 }
 
-$Clientes_List_Table = new Clientes_List_Table();
-$Clientes_List_Table->prepare_items();
+$Autos_List_Table = new Autos_List_Table();
+$Autos_List_Table->prepare_items();
 ?>
 
 <div class="wrap">
     <h1><?php esc_html_e('Ver Clientes', 'textdomain');?></h1>
-    <?php $Clientes_List_Table->display();?>
+    <?php $Autos_List_Table->display();?>
 </div>
