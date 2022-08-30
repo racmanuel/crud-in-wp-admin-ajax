@@ -1,0 +1,12 @@
+{
+    "name": "rcmanuel/crud-in-wp-admin-ajax",
+    "require": {
+        "spatie/simple-excel": "^1.13"
+    },
+    "authors": [
+        {
+            "name": "Manuel Ramirez Coronel",
+            "email": "ra_cm@outlook.com"
+        }
+    ]
+}

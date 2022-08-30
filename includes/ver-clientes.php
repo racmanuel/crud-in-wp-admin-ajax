@@ -139,7 +139,7 @@ class Clientes_List_Table extends WP_List_Table
     private function sort_data($a, $b)
     {
         // Set defaults
-        $orderby = 'name';
+        $orderby = 'nombres';
         $order = 'asc';
 
         // If orderby is set, use this as the sort column
@@ -168,5 +168,8 @@ $Clientes_List_Table->prepare_items();
 
 <div class="wrap">
     <h1><?php esc_html_e('Ver Clientes', 'textdomain');?></h1>
+    <a href="<?php echo admin_url( '?download' ); ?>">
+        <button type="submit">Descargar en Excel</button>
+    </a>
     <?php $Clientes_List_Table->display();?>
 </div>

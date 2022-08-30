@@ -10,6 +10,10 @@ License: GPLv2 or later
 License URI:
  */
 
+include_once 'vendor/autoload.php';
+
+use Spatie\SimpleExcel\SimpleExcelWriter;
+
 global $crud_db_version;
 $crud_db_version = '1.0';
 
@@ -245,3 +249,31 @@ function registrar_auto_in_db()
 
 add_action('wp_ajax_nopriv_registrar_auto_in_db', 'registrar_auto_in_db'); // Para usuarios no logueados
 add_action('wp_ajax_registrar_auto_in_db', 'registrar_auto_in_db'); // Para usuarios logueados
+
+add_action( 'plugins_loaded', function() {
+    if ( isset( $_GET['download'] ) ) {
+        // here you can create .xls file
+        $data = array();
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'clientes';
+        $consulta = $wpdb->get_results("SELECT * FROM $table_name");
+
+        foreach ($consulta as $value){ 
+            $data[] = array(
+                'id' => $value->ID,
+                'nombres' => $value->NOMBRE,
+                'apellido_mat' => $value->APELLIDO_MAT,
+                'apellido_pat' => $value->APELLIDO_PAT,
+                'telefono_1' => $value->TELEFONO_1,
+                'telefono_2' => $value->TELEFONO_2,
+                'direccion' =>$value->DIRECCION
+            );
+        }
+
+        $writer = SimpleExcelWriter::streamDownload('your-export.xlsx')
+        ->addRows($data)
+       ->toBrowser();
+
+        wp_die();      
+    }
+});
